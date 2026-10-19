@@ -101,13 +101,8 @@ def hex_to_rgb(value: str):
 
 def build_category_colors(categories):
     palette = [
-        "#C2410C",
-        "#9A3412",
-        "#7C2D12",
         "#166534",
-        "#14532D",
-        "#065F46",
-        "#3F6212",
+        "#C2410C",
     ]
     return {category: palette[index % len(palette)] for index, category in enumerate(categories)}
 
@@ -171,7 +166,7 @@ def render_gallery(filtered_df: pd.DataFrame):
         with col:
             image_url = row.get("image_url", "")
             if isinstance(image_url, str) and image_url.strip():
-                st.image(image_url, width="stretch")
+                st.image(image_url, use_column_width=True)
             else:
                 st.markdown(
                     "<div style='height: 180px; display:flex; align-items:center; justify-content:center; border:1px solid #111827; border-radius: 12px; background:#ffffff; color:#111827; font-weight:600;'>No image</div>",
@@ -331,6 +326,7 @@ def main():
             .reset_index()
             .rename(columns={"index": "Category", "iconic_taxon_name": "Count"})
         )
+    
         category_counts.columns = ["Category", "Count"]
         category_counts = category_counts.sort_values("Count", ascending=False)
 
